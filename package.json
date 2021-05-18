@@ -2,7 +2,7 @@
   "name": "invest-idea",
   "version": "0.1.0",
   "description": "Тестовое задание от АУФИ",
-  "main": "main.js",
+  "main": "src/main.js",
   "scripts": {
     "start": "nodemon ."
   },
