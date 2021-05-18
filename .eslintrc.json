@@ -14,8 +14,6 @@
   },
   "rules": {
     "strict": ["error", "global"],
-    "no-underscore-dangle": "off",
-    "class-methods-use-this": "off",
-    "no-useless-constructor": "off"
+    "no-underscore-dangle": "off"
   }
 }
