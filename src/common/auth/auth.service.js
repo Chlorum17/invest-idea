@@ -24,7 +24,7 @@ const service = {
 
   async issueToken(userId) {
     const token = await jwt.sign(
-      { id: userId },
+      { _id: userId },
       process.env.INV_IDEA_ACC_TOKEN_SECRET,
       { expiresIn: process.env.INV_IDEA_ACC_TOKEN_EXP },
     );

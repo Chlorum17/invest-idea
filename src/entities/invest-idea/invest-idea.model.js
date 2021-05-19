@@ -20,7 +20,6 @@ const ideaSchema = new Schema(
     investType: { type: String, enum: ['Покупка', 'Продажа'], required: true },
     openingDate: { type: Date, required: true },
     closingDate: { type: Date, required: true },
-    rating: [{ type: Schema.Types.ObjectId, ref: 'IdeaRating' }],
     description: { type: String, required: true },
     reasonsToInvest: { type: String, required: true },
     companyLogo: { type: String },

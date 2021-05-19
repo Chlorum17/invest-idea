@@ -14,10 +14,7 @@ const service = {
   },
 
   async findById(id) {
-    const investIdea = await InvestIdeaModel.findById(id).populate({
-      path: 'IdeaRating',
-      select: 'rating',
-    });
+    const investIdea = await InvestIdeaModel.findById(id);
     return sanitizeInvestIdea(investIdea);
   },
 
