@@ -6,7 +6,7 @@ const ideaRatingController = require('../entities/idea-rating/idea-rating-contro
 
 const authMiddleware = require('../common/auth/auth.middleware');
 
-router.get('/:_id', ideaRatingController.getRating);
+router.get('/:ideaId', ideaRatingController.getRating);
 
 router.use(authMiddleware.authenticate);
 
