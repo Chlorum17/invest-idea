@@ -29,4 +29,6 @@ const ideaSchema = new Schema(
   { timestamps: true },
 );
 
-module.exports = model('InvestIdea', ideaSchema);
+const InvestIdeaModel = model('InvestIdea', ideaSchema);
+
+module.exports = InvestIdeaModel;

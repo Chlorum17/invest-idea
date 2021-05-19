@@ -11,4 +11,6 @@ const ideaRatingSchema = new Schema(
   { timestamps: true },
 );
 
-module.exports = model('IdeaRating', ideaRatingSchema);
+const IdeaRatingModel = model('IdeaRating', ideaRatingSchema);
+
+module.exports = IdeaRatingModel;
