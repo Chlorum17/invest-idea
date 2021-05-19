@@ -21,17 +21,17 @@ const service = {
     return sanitizeInvestIdea(investIdea);
   },
 
-  async create(data) {
-    const currentIncome = this._currentIncomeCalc(data);
+  async create(createIdeaDto) {
+    const currentIncome = this._currentIncomeCalc(createIdeaDto);
 
-    const predictedIncome = this._predictedIncomeCalc(data);
+    const predictedIncome = this._predictedIncomeCalc(createIdeaDto);
 
     const ideaRealization = this._ideaRealizationCalc(
       predictedIncome,
       currentIncome,
     );
     const investIdea = {
-      ...data,
+      ...createIdeaDto,
       predictedIncome,
       currentIncome,
       ideaRealization,

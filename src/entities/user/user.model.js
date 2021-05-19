@@ -5,7 +5,6 @@ const { Schema, model } = require('mongoose');
 const userSchema = new Schema(
   {
     firstName: { type: String, required: true },
-    secondName: { type: String, required: true },
     email: { type: String, required: true, unique: true },
     password: { type: String, required: true },
     ideasRating: [{ type: Schema.Types.ObjectId, ref: 'IdeaRating' }],
@@ -13,4 +12,6 @@ const userSchema = new Schema(
   { timestamps: true },
 );
 
-module.exports = model('User', userSchema);
+const UserModel = model('User', userSchema);
+
+module.exports = UserModel;
