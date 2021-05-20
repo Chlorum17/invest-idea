@@ -10,4 +10,8 @@ router.get('/:_id', investIdeaController.findById);
 
 router.post('/create', investIdeaController.create);
 
+router.get('/getChart/:ideaId', investIdeaController.getIdeaIncomeChart);
+
+router.patch('/update/:_id', investIdeaController.findByIdAndUpdate);
+
 module.exports = router;
