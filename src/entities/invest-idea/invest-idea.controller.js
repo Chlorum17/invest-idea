@@ -9,7 +9,8 @@ const investIdeaService = require('./services/invest-idea.service');
 const controller = {
   async find(req, res) {
     try {
-      const investIdeas = await investIdeaService.find(aqp(req.query));
+      const params = aqp(req.query);
+      const investIdeas = await investIdeaService.find(params);
 
       if (investIdeas.length < 1)
         res.status(404).json({ message: 'No Invest Ideas found' });
@@ -26,8 +27,7 @@ const controller = {
 
   async findById(req, res) {
     try {
-      const investIdea = await investIdeaService.findById(req.params);
-
+      const investIdea = await investIdeaService.findById(req.params.ideaId);
       if (!investIdea)
         return res.status(404).json({ message: 'No Invest Idea found' });
 
@@ -58,8 +58,8 @@ const controller = {
   async getIdeaIncomeChart(req, res) {
     try {
       const ideaIncomeChart = await investIdeaService.getIdeaIncomeChart(
-        req.params,
-        req.query,
+        req.params.ideaId,
+        req.query.period,
       );
       return res.status(200).json(ideaIncomeChart);
     } catch (error) {
@@ -69,12 +69,13 @@ const controller = {
     }
   },
 
-  async findByIdAndUpdate(req, res) {
+  async findByIdAndUpdateIncomeHistory(req, res) {
     try {
-      const updatedIvestIdea = await investIdeaService.findByIdAndUpdate(
-        req.params,
-        req.body,
-      );
+      const updatedIvestIdea =
+        await investIdeaService.findByIdAndUpdateIncomeHistory(
+          req.params.ideaId,
+          req.body,
+        );
       return res.status(200).json(updatedIvestIdea);
     } catch (error) {
       return res

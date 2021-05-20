@@ -14,8 +14,8 @@ const service = {
     return investIdeas;
   },
 
-  async findById({ _id }) {
-    const investIdea = await InvestIdeaModel.findById(_id);
+  async findById(ideaId) {
+    const investIdea = await InvestIdeaModel.findById(ideaId);
     return investIdea;
   },
 
@@ -40,20 +40,22 @@ const service = {
     return existingInvestIdea;
   },
 
-  async getIdeaIncomeChart({ ideaId }, { period }) {
+  async getIdeaIncomeChart(ideaId, period) {
     const { startOfPeriod, endOfPeriod } = incomeChart.getPeriodLimits(period);
 
     const { currentIncomeHistory } = await InvestIdeaModel.findById(ideaId);
-
     const currentIncomeChart = currentIncomeHistory.filter(
       (el) => el.date >= startOfPeriod && el.date <= endOfPeriod,
     );
+
+    if (currentIncomeChart.length < 1 && currentIncomeHistory.length > 0)
+      return [currentIncomeHistory[currentIncomeHistory.length - 1]];
     return currentIncomeChart;
   },
 
-  async findByIdAndUpdate({ _id }, { averageValue, date }) {
+  async findByIdAndUpdateIncomeHistory(ideaId, { averageValue, date }) {
     const updatedIdea = await InvestIdeaModel.findOneAndUpdate(
-      { _id },
+      ideaId,
       { $addToSet: { currentIncomeHistory: { averageValue, date } } },
       {
         new: true,

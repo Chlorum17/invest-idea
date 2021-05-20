@@ -5,7 +5,7 @@ const authService = require('./auth.service');
 const controllers = {
   async login(req, res) {
     try {
-      const user = await authService.isUser(req.body);
+      const user = await authService.isUser(req.body.email);
       if (!user)
         return res
           .status(404)
@@ -18,7 +18,7 @@ const controllers = {
       if (!mathedPassword)
         return res.status(401).json({ message: 'Wrong password' });
 
-      const accessToken = await authService.issueToken(user);
+      const accessToken = await authService.issueToken(user._id);
 
       return res.status(200).json({ accessToken });
     } catch (error) {
