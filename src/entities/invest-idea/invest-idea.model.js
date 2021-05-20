@@ -22,6 +22,13 @@ const ideaSchema = new Schema(
     closingDate: { type: Date, required: true },
     description: { type: String, required: true },
     reasonsToInvest: { type: String, required: true },
+    currentIncomeHistory: [
+      {
+        _id: false,
+        averageValue: { type: Number, required: true },
+        date: { type: Date, required: true },
+      },
+    ],
     companyLogo: { type: String },
     companyBackground: { type: String },
   },
