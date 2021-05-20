@@ -9,29 +9,37 @@
 
 ## Описание ендпоинтов
 
+Все данные возвращаются в формате json.
+Все POST запросы принимают данные в формате json.
+
 ### POST http://localhost:8080/api/users/register
 
-### Обязательные поля
+Создает нового пользователя
 
-name: String,
-email: String,
-password: String,
+Обязательные поля тела запроса:
 
-#### Возвращает
+- name
+- email
+- password
 
-Cозданный документ пользователя в формате json.
+Значения для обязательных полей - строки.
+
+Возвращает документ созданного пользователя.
 
 ### POST http://localhost:8080/api/auth/login
 
-#### Обязательные поля
+Аутентифицирует пользователя.
 
-email: String,
-password: String,
+Обязательные поля тела запроса:
 
-#### Возвращает
+- email
+- password
 
-Формат json.
-Пример:
+Значения для обязательных полей - строки.
+
+Возвращает accessToken.
+
+#### Тело ответа:
 
 ```json
 {
@@ -39,96 +47,74 @@ password: String,
 }
 ```
 
-### GET http://localhost:8080/api/invest-idea
+### GET http://localhost:8080/api/invest-ideas
 
-#### query
+Возвращает массив
 
-?filter=value
-Список ключей см. в примере возвращаемого значения [ниже](#####Пример:)
-
-?currentIncome<=5
-?currentIncome>=5&currentIncome<=15
-?currentIncome>=15&currentIncome<=30
-?currentIncome>=30
-?currentIncome>0
-
-Следующие поля принимают только значение указанные ниже:
-
-priceType: $, Р, £, ₣
-investType: Покупка, Продажа
-status: Открыт, Закрыт
-
-##### ?limit ?skip
-
-?limit=положительное число
-?limit=4
-Вернет максимум 4 документа.
-
-?skip=положительное число
-?skip=3
-Пропустит первые 3 найденные документа.
-
-?skip=4?limit=4
-Пропустим первые 4 найденных документа, и вернет 4 документа идущие после них
-
-##### ?sort
-
-?sort=value - по возрастанию
-?sort=-value - по убыванию
-
-?sort=currentIncome
-От меньшего currentIncome к большему.
-
-?sort=-currentIncome
-От большего currentIncome к меньшему.
-
-?sort=openingDate
-От старых идей к новым.
-
-?sort=-openingDate
-От новых идей к старым.
-
-#### Возвращает
-
-Массив из документов invest-idea в формате json. Пустой массив, если документы не найдены по заданным query.
-
-##### Пример:
+#### Тело ответа, если идеи не найдена
 
 ```json
-[
-  {
-    "id": "60a4f437e87fbb47482f28eb",
-    "company": "Tesla",
-    "status": "Открыт",
-    "openingPrice": 600,
-    "closingPrice": 540,
-    "currentPrice": 578.25,
-    "priceType": "$",
-    "investType": "Продажа",
-    "openingDate": "2021-05-13T00:00:00.000Z",
-    "closingDate": "2021-08-13T00:00:00.000Z",
-    "description": "description",
-    "companyLogo": "companyLogoURI",
-    "predictedIncome": "10.00",
-    "currentIncome": "3.63",
-    "ideaRealization": "36.25"
-  },
-  {
-    "id": "60a4f78edea1a94a603e19b4",
-    "company": "Home Depot",
-    "status": "Открыт",
-    "openingPrice": 332,
-    "closingPrice": 360,
-    "currentPrice": 317.98,
-    "priceType": "$",
-    "investType": "Покупка",
-    "openingDate": "2021-05-06T00:00:00.000Z",
-    "closingDate": "2021-08-06T00:00:00.000Z",
-    "description": "description",
-    "companyLogo": "companyLogoURI",
-    "predictedIncome": "8.43",
-    "currentIncome": "-4.22",
-    "ideaRealization": 0
-  }
-]
+{
+  "message": "No ideas Found"
+}
 ```
+
+### GET http://localhost:8080/api/invest-ideas/:\_id
+
+Позволяет получить конкретную идею по ее id.
+
+#### Тело ответа:
+
+```json
+{
+  "id": "60a4f7c9dea1a94a603e19bb",
+  "company": "AstraZeneca",
+  "status": "Закрыт",
+  "openingPrice": 63,
+  "closingPrice": 68,
+  "currentPrice": 68.01,
+  "priceType": "£",
+  "investType": "Покупка",
+  "openingDate": "2019-07-12T00:00:00.000Z",
+  "closingDate": "2019-09-12T00:00:00.000Z",
+  "description": "description",
+  "reasonsToInvest": "Краткое обоснование ...",
+  "companyLogo": "companyLogoURI",
+  "companyBackground": "companyBackgroundURI",
+  "predictedIncome": "7.94",
+  "currentIncome": "7.95",
+  "ideaRealization": "100.20"
+}
+```
+
+#### Тело ответа, если идея не найдена
+
+```json
+{
+  "message": "No idea Found"
+}
+```
+
+### POST http://localhost:8080/api/invest-ideas/create
+
+Создает идею
+
+### GET http://localhost:8080/api/invest-ideas/getChart/:ideaId
+
+Позволяет получить график доходности идеи.
+
+#### query параметры
+
+**sort**
+
+Допустимые значения:
+
+- hour
+- day
+- week
+- month
+- year
+
+### GET http://localhost:8080/api/idea-rating/:ideaId
+
+### POST http://localhost:8080/api/idea-rating/vote
