@@ -19,8 +19,8 @@ router.use(
 
 router.use(express.json());
 
-router.use('/auth', authRouter);
 router.use('/users', userRouter);
+router.use('/auth', authRouter);
 router.use('/invest-ideas', investIdeaRouter);
 router.use('/idea-rating', ideaRatingRouter);
 

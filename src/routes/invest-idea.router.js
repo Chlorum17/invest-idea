@@ -8,9 +8,9 @@ router.get('/', investIdeaController.find);
 
 router.get('/:ideaId', investIdeaController.findById);
 
-router.post('/create', investIdeaController.create);
-
 router.get('/getChart/:ideaId', investIdeaController.getIdeaIncomeChart);
+
+router.post('/create', investIdeaController.create);
 
 router.patch(
   '/update/:ideaId',
