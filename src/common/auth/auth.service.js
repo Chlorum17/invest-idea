@@ -5,21 +5,20 @@ const jwt = require('jwt-promisify');
 const userService = require('../../entities/user/user.service');
 
 const service = {
-  async login({ email, password }) {
+  async login({ _id }) {
+    const accessToken = await this.issueToken(_id);
+
+    return accessToken;
+  },
+
+  async isUser({ email }) {
     const user = await userService.findOne({ email });
-    if (!user) return { status: 404, message: 'User not found' };
+    return user;
+  },
 
-    const matchPassword = password === user.password;
-    if (!matchPassword) return { status: 401, message: 'Wrong password' };
-
-    const accessToken = await this.issueToken(user._id);
-
-    return {
-      status: 200,
-      message: {
-        accessToken,
-      },
-    };
+  isMatchPassword(inputPassword, userPassword) {
+    const matchPassword = inputPassword === userPassword;
+    return matchPassword;
   },
 
   async issueToken(userId) {

@@ -10,6 +10,6 @@ router.get('/:ideaId', ideaRatingController.getRating);
 
 router.use(authMiddleware.authenticate);
 
-router.post('/', ideaRatingController.vote);
+router.post('/vote', ideaRatingController.vote);
 
 module.exports = router;

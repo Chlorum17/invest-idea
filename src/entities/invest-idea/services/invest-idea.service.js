@@ -2,7 +2,6 @@
 
 const InvestIdeaModel = require('../invest-idea.model');
 
-const sanitize = require('./invest-idea.sanitize');
 const incomeCalc = require('./income-calc.service');
 const incomeChart = require('./income-chart.service');
 
@@ -12,12 +11,12 @@ const service = {
       .skip(skip)
       .limit(limit)
       .sort(sort);
-    return investIdeas.map(sanitize.sanitizeIdeasList);
+    return investIdeas;
   },
 
   async findById({ _id }) {
     const investIdea = await InvestIdeaModel.findById(_id);
-    return sanitize.sanitizeIdeaInDetail(investIdea);
+    return investIdea;
   },
 
   async create(createIdeaDto) {
@@ -38,7 +37,7 @@ const service = {
 
     const existingInvestIdea = await InvestIdeaModel.create(investIdea);
 
-    return sanitize.sanitizeIdeaInDetail(existingInvestIdea);
+    return existingInvestIdea;
   },
 
   async getIdeaIncomeChart({ ideaId }, { period }) {
