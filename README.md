@@ -11,17 +11,17 @@
 
 ### Содержимое .env
 
-INV_IDEA_SERVER_PORT=8080
-INV_IDEA_MONGO_URI=mongodb+srv://naruto:sasuke@cluster0.u9cef.mongodb.net/invest-idea?retryWrites=true&w=majority
-INV_IDEA_ACC_TOKEN_SECRET=secret
-INV_IDEA_ACC_TOKEN_EXP=10h
+- INV_IDEA_SERVER_PORT=8080
+- INV_IDEA_MONGO_URI=mongodb+srv://naruto:sasuke@cluster0.u9cef.mongodb.net/invest-idea?retryWrites=true&w=majority
+- INV_IDEA_ACC_TOKEN_SECRET=secret
+- INV_IDEA_ACC_TOKEN_EXP=10h
 
 ### График доходности
 
 Данные для получения графика доходности добавлены в идею со следующим id - **60a4f7c9dea1a94a603e19bb**
 Ендпоинт для добавления данных, если потребуется **PATCH** http://localhost:8080/api/invest-ideas/update/:ideaId
 
-#### Обязательные параметры тела запроса
+#### Тело запроса ендпоинта для добавления данных
 
 **averageValue** - число;
 **date** - дата
