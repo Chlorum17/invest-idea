@@ -53,10 +53,10 @@ const service = {
     return currentIncomeChart;
   },
 
-  async findByIdAndUpdateIncomeHistory(ideaId, { averageValue, date }) {
+  async findByIdAndUpdateIncomeHistory(ideaId, { value, date }) {
     const updatedIdea = await InvestIdeaModel.findOneAndUpdate(
       ideaId,
-      { $addToSet: { currentIncomeHistory: { averageValue, date } } },
+      { $addToSet: { currentIncomeHistory: { value, date } } },
       {
         new: true,
       },
