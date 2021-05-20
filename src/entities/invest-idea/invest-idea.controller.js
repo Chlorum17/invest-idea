@@ -10,7 +10,7 @@ const controller = {
       const investIdeas = await investIdeaService.find(aqp(req.query));
 
       if (investIdeas.length < 1)
-        res.status(404).json({ message: 'No Invest Ideas found' });
+        return res.status(404).json({ message: 'No Invest Ideas found' });
 
       return res.status(200).json(investIdeas);
     } catch (error) {
