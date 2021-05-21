@@ -2,9 +2,10 @@
   "name": "invest-idea",
   "version": "0.1.0",
   "description": "Тестовое задание от АУФИ",
-  "main": "main.js",
+  "main": "src/main.js",
   "scripts": {
-    "start": "nodemon ."
+    "start": "node .",
+    "dev": "nodemon ."
   },
   "repository": {
     "type": "git",
@@ -17,9 +18,15 @@
   },
   "homepage": "https://github.com/Chlorum17/invest-idea#readme",
   "dependencies": {
+    "api-query-params": "^5.0.0",
     "cors": "^2.8.5",
+    "dotenv": "^9.0.2",
     "express": "^4.17.1",
-    "mongoose": "^5.12.9"
+    "jwt-promisify": "^1.1.3",
+    "lodash": "^4.17.21",
+    "mongoose": "^5.12.10",
+    "pino": "^6.11.3",
+    "pino-pretty": "^4.8.0"
   },
   "devDependencies": {
     "eslint": "^7.26.0",
