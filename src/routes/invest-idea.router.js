@@ -4,13 +4,15 @@ const router = require('express').Router();
 
 const investIdeaController = require('../entities/invest-idea/invest-idea.controller');
 
-router.get('/', investIdeaController.find);
+const ideaMiddleware = require('../entities/invest-idea/is-idea.middleware');
 
+router.get('/', investIdeaController.find);
 router.get('/:ideaId', investIdeaController.findById);
+router.post('/create', investIdeaController.create);
+
+router.use('*/:ideaId', ideaMiddleware.isIdea);
 
 router.get('/getChart/:ideaId', investIdeaController.getIdeaIncomeChart);
-
-router.post('/create', investIdeaController.create);
 
 router.patch(
   '/update/:ideaId',
