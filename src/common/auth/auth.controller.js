@@ -11,7 +11,7 @@ const controllers = {
           .status(404)
           .json({ message: 'User with this email does not exist' });
 
-      const mathedPassword = await authService.isMatchPassword(
+      const mathedPassword = authService.isMatchPassword(
         req.body.password,
         user.password,
       );
@@ -24,7 +24,7 @@ const controllers = {
     } catch (error) {
       return res
         .status(500)
-        .json({ message: `Internal server error: ${error}` });
+        .json({ message: `Internal server error: ${error.message}` });
     }
   },
 };
