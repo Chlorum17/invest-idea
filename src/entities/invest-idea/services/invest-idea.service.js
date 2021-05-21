@@ -2,7 +2,6 @@
 
 const InvestIdeaModel = require('../invest-idea.model');
 
-const sanitize = require('./invest-idea.sanitize');
 const incomeCalc = require('./income-calc.service');
 const incomeChart = require('./income-chart.service');
 
@@ -12,12 +11,12 @@ const service = {
       .skip(skip)
       .limit(limit)
       .sort(sort);
-    return investIdeas.map(sanitize.sanitizeIdeasList);
+    return investIdeas;
   },
 
-  async findById({ _id }) {
-    const investIdea = await InvestIdeaModel.findById(_id);
-    return sanitize.sanitizeIdeaInDetail(investIdea);
+  async findById(ideaId) {
+    const investIdea = await InvestIdeaModel.findById(ideaId);
+    return investIdea;
   },
 
   async create(createIdeaDto) {
@@ -38,24 +37,26 @@ const service = {
 
     const existingInvestIdea = await InvestIdeaModel.create(investIdea);
 
-    return sanitize.sanitizeIdeaInDetail(existingInvestIdea);
+    return existingInvestIdea;
   },
 
-  async getIdeaIncomeChart({ ideaId }, { period }) {
+  async getIdeaIncomeChart(ideaId, period) {
     const { startOfPeriod, endOfPeriod } = incomeChart.getPeriodLimits(period);
 
     const { currentIncomeHistory } = await InvestIdeaModel.findById(ideaId);
-
     const currentIncomeChart = currentIncomeHistory.filter(
       (el) => el.date >= startOfPeriod && el.date <= endOfPeriod,
     );
+
+    if (currentIncomeChart.length < 1 && currentIncomeHistory.length > 0)
+      return [currentIncomeHistory[currentIncomeHistory.length - 1]];
     return currentIncomeChart;
   },
 
-  async findByIdAndUpdate({ _id }, { averageValue, date }) {
+  async findByIdAndUpdateIncomeHistory(ideaId, { value, date }) {
     const updatedIdea = await InvestIdeaModel.findOneAndUpdate(
-      { _id },
-      { $addToSet: { currentIncomeHistory: { averageValue, date } } },
+      ideaId,
+      { $addToSet: { currentIncomeHistory: { value, date } } },
       {
         new: true,
       },

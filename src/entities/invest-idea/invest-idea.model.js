@@ -25,7 +25,7 @@ const ideaSchema = new Schema(
     currentIncomeHistory: [
       {
         _id: false,
-        averageValue: { type: Number, required: true },
+        value: { type: Number, required: true },
         date: { type: Date, required: true },
       },
     ],

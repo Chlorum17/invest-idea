@@ -5,7 +5,7 @@ const IdeaRatingModel = require('./idea-rating.model');
 const authService = require('../../common/auth/auth.service');
 
 const service = {
-  async getRating({ ideaId }) {
+  async getRating(ideaId) {
     const likes = await IdeaRatingModel.countDocuments({
       $and: [{ idea: ideaId }, { rating: 'Верю' }],
     });
@@ -28,7 +28,10 @@ const service = {
 
     const ideaRating = await this.findOne({ user: _id, idea: ideaId });
 
-    if (ideaRating) return { status: 409, message: 'Вы уже проголосовали' };
+    if (ideaRating) {
+      const currentRating = await this.getRating(ideaId);
+      return currentRating;
+    }
 
     await IdeaRatingModel.create({
       user: _id,
@@ -37,7 +40,7 @@ const service = {
     });
 
     const updatedRating = await this.getRating(ideaId);
-    return { status: 201, message: updatedRating };
+    return updatedRating;
   },
 };
 

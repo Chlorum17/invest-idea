@@ -2,6 +2,16 @@
 
 const omit = require('lodash/omit');
 
+function returnSanitizedIdea(omittedIdea) {
+  const { currentIncome, predictedIncome, ideaRealization } = omittedIdea;
+  return {
+    ...omittedIdea,
+    predictedIncome: predictedIncome.toFixed(2),
+    currentIncome: currentIncome.toFixed(2),
+    ideaRealization: ideaRealization > 0 ? ideaRealization.toFixed(2) : 0,
+  };
+}
+
 const sanitize = {
   sanitizeIdeaInDetail(investIdea) {
     const omittedInvestIdea = omit(investIdea.toObject(), [
@@ -12,7 +22,7 @@ const sanitize = {
       'currentIncomeHistory',
     ]);
 
-    return this._returnSanitizedIdea({
+    return returnSanitizedIdea({
       id: investIdea._id,
       ...omittedInvestIdea,
     });
@@ -29,21 +39,10 @@ const sanitize = {
       'companyBackground',
     ]);
 
-    return this._returnSanitizedIdea({
+    return returnSanitizedIdea({
       id: investIdea._id,
       ...omittedInvestIdea,
     });
-  },
-
-  _returnSanitizedIdea(omittedIdea) {
-    const { currentIncome, predictedIncome, ideaRealization } = omittedIdea;
-
-    return {
-      ...omittedIdea,
-      predictedIncome: predictedIncome.toFixed(2),
-      currentIncome: currentIncome.toFixed(2),
-      ideaRealization: ideaRealization > 0 ? ideaRealization.toFixed(2) : 0,
-    };
   },
 };
 

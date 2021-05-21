@@ -5,26 +5,23 @@ const ideaRatingService = require('./idea-rating-service');
 const controller = {
   async getRating(req, res) {
     try {
-      const ideaRating = await ideaRatingService.getRating(req.params);
+      const ideaRating = await ideaRatingService.getRating(req.params.ideaId);
       return res.status(200).json(ideaRating);
     } catch (error) {
       return res
         .status(500)
-        .json({ message: `Internal server error: ${error}` });
+        .json({ message: `Internal server error: ${error.message}` });
     }
   },
 
   async vote(req, res) {
     try {
-      const { status, message } = await ideaRatingService.vote(
-        req.headers,
-        req.body,
-      );
-      return res.status(status).json(message);
+      const ideaRating = await ideaRatingService.vote(req.headers, req.body);
+      return res.status(201).json(ideaRating);
     } catch (error) {
       return res
         .status(500)
-        .json({ message: `Internal server error: ${error}` });
+        .json({ message: `Internal server error: ${error.message}` });
     }
   },
 };
