@@ -2,8 +2,8 @@
 
 const omit = require('lodash/omit');
 
-const sanitize = {
-  sanitizeIdeaInDetail(investIdea) {
+const formatter = {
+  formateIdeaInDetail(investIdea) {
     const omittedInvestIdea = omit(investIdea.toObject(), [
       '__v',
       'createdAt',
@@ -12,13 +12,13 @@ const sanitize = {
       'currentIncomeHistory',
     ]);
 
-    return this._returnSanitizedIdea({
+    return this._returnFormattedIdea({
       id: investIdea._id,
       ...omittedInvestIdea,
     });
   },
 
-  sanitizeIdeasList(investIdea) {
+  formateIdeasList(investIdea) {
     const omittedInvestIdea = omit(investIdea.toObject(), [
       '__v',
       'createdAt',
@@ -29,13 +29,13 @@ const sanitize = {
       'companyBackground',
     ]);
 
-    return this._returnSanitizedIdea({
+    return this._returnFormattedIdea({
       id: investIdea._id,
       ...omittedInvestIdea,
     });
   },
 
-  _returnSanitizedIdea(omittedIdea) {
+  _returnFormattedIdea(omittedIdea) {
     const { currentIncome, predictedIncome, ideaRealization } = omittedIdea;
     return {
       ...omittedIdea,
@@ -46,4 +46,4 @@ const sanitize = {
   },
 };
 
-module.exports = sanitize;
+module.exports = formatter;
