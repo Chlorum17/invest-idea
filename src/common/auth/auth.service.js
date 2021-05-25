@@ -4,6 +4,8 @@ const jwt = require('jwt-promisify');
 
 const userService = require('../../entities/user/user.service');
 
+const { accTokenSecret, accTokenExpires } = require('../config');
+
 const service = {
   async login(_id) {
     const accessToken = await this.issueToken(_id);
@@ -22,19 +24,14 @@ const service = {
   },
 
   async issueToken(userId) {
-    const token = await jwt.sign(
-      { _id: userId },
-      process.env.INV_IDEA_ACC_TOKEN_SECRET,
-      { expiresIn: process.env.INV_IDEA_ACC_TOKEN_EXP },
-    );
+    const token = await jwt.sign({ _id: userId }, accTokenSecret, {
+      expiresIn: accTokenExpires,
+    });
     return token;
   },
 
   async verifyAccessToken(token) {
-    const verifiedToken = await jwt.verify(
-      token,
-      process.env.INV_IDEA_ACC_TOKEN_SECRET,
-    );
+    const verifiedToken = await jwt.verify(token, accTokenSecret);
     return verifiedToken;
   },
 
