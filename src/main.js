@@ -1,8 +1,6 @@
 'use strict';
 
-require('dotenv').config();
-
-const { serverPort, mongoURI } = require('./common/config');
+const { serverPort, mongoURI } = require('../config');
 
 const startServer = require('./server');
 
