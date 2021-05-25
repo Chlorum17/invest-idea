@@ -2,7 +2,7 @@
 
 const aqp = require('api-query-params');
 
-const sanitize = require('./services/invest-idea.sanitize');
+const sanitizer = require('./services/invest-idea.sanitizer');
 
 const investIdeaService = require('./services/invest-idea.service');
 
@@ -15,7 +15,10 @@ const controller = {
       if (investIdeas.length < 1)
         res.status(404).json({ message: 'No Invest Ideas found' });
 
-      const sanitizedInvestIdeas = investIdeas.map(sanitize.sanitizeIdeasList);
+      const sanitizedInvestIdeas = investIdeas.map(
+        sanitizer.sanitizeIdeasList,
+        sanitizer,
+      );
 
       return res.status(200).json(sanitizedInvestIdeas);
     } catch (error) {
@@ -31,7 +34,7 @@ const controller = {
       if (!investIdea)
         return res.status(404).json({ message: 'No Invest Idea found' });
 
-      const sanitizedInvestIdea = sanitize.sanitizeIdeaInDetail(investIdea);
+      const sanitizedInvestIdea = sanitizer.sanitizeIdeaInDetail(investIdea);
 
       return res.status(200).json(sanitizedInvestIdea);
     } catch (error) {
@@ -45,7 +48,7 @@ const controller = {
     try {
       const investIdea = await investIdeaService.create(req.body);
 
-      const sanitizedInvestIdea = sanitize.sanitizeIdeaInDetail(investIdea);
+      const sanitizedInvestIdea = sanitizer.sanitizeIdeaInDetail(investIdea);
 
       return res.status(201).json(sanitizedInvestIdea);
     } catch (error) {
