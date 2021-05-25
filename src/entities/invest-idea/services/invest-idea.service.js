@@ -2,7 +2,7 @@
 
 const InvestIdeaModel = require('../invest-idea.model');
 
-const incomeCalc = require('./income-calc.service');
+const calcFieldsService = require('./calculated-fields.service');
 const incomeChart = require('./income-chart.service');
 
 const service = {
@@ -20,19 +20,19 @@ const service = {
   },
 
   async create(createIdeaDto) {
-    const currentIncome = incomeCalc.currentIncomeCalc(createIdeaDto);
+    const { investType, openingPrice, closingPrice, currentPrice } =
+      createIdeaDto;
 
-    const predictedIncome = incomeCalc.predictedIncomeCalc(createIdeaDto);
+    const calculatedFields = calcFieldsService.getCalculatedFields({
+      investType,
+      openingPrice,
+      closingPrice,
+      currentPrice,
+    });
 
-    const ideaRealization = incomeCalc.ideaRealizationCalc(
-      predictedIncome,
-      currentIncome,
-    );
     const investIdea = {
       ...createIdeaDto,
-      predictedIncome,
-      currentIncome,
-      ideaRealization,
+      ...calculatedFields,
     };
 
     const existingInvestIdea = await InvestIdeaModel.create(investIdea);
