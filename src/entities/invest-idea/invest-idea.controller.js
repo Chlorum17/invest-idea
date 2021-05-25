@@ -32,7 +32,8 @@ const controller = {
   async findById(req, res) {
     try {
       const investIdea = await investIdeaService.findById(req.params.ideaId);
-      if (!investIdea) {
+
+      if (investIdea === null) {
         return res.status(404).json({ message: 'No Invest Idea found' });
       }
 

@@ -48,8 +48,10 @@ const service = {
       (el) => el.date >= startOfPeriod && el.date <= endOfPeriod,
     );
 
-    if (currentIncomeChart.length < 1 && currentIncomeHistory.length > 0)
+    if (currentIncomeChart.length < 1 && currentIncomeHistory.length > 0) {
       return [currentIncomeHistory[currentIncomeHistory.length - 1]];
+    }
+
     return currentIncomeChart;
   },
 

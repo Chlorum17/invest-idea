@@ -6,17 +6,21 @@ const controllers = {
   async login(req, res) {
     try {
       const user = await authService.isUser(req.body.email);
-      if (!user)
-        return res
-          .status(404)
-          .json({ message: 'User with this email does not exist' });
+
+      if (user === null) {
+        return res.status(404).json({
+          message: `User with email: ${req.body.email} doesn't exist`,
+        });
+      }
 
       const mathedPassword = authService.isMatchPassword(
         req.body.password,
         user.password,
       );
-      if (!mathedPassword)
+
+      if (mathedPassword === false) {
         return res.status(401).json({ message: 'Wrong password' });
+      }
 
       const accessToken = await authService.issueToken(user._id);
 

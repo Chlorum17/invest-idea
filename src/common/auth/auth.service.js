@@ -4,7 +4,7 @@ const jwt = require('jwt-promisify');
 
 const userService = require('../../entities/user/user.service');
 
-const { accTokenSecret, accTokenExpires } = require('../config');
+const { accTokenSecret, accTokenExpires } = require('../../../config');
 
 const service = {
   async login(_id) {
@@ -36,8 +36,9 @@ const service = {
   },
 
   parseBearerToken({ authorization }) {
-    if (!authorization)
+    if (!authorization) {
       return { status: 400, message: 'Access token is missing' };
+    }
     return authorization.replace('Bearer ', '');
   },
 };
