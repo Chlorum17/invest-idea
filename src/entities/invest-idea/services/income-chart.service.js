@@ -35,16 +35,17 @@ const incomeChartService = {
     const HOUR_IN_MILLISEC = 60 * 60 * 1000;
     const DAY_IN_MILLISEC = HOUR_IN_MILLISEC * 24;
     const WEEK_IN_MILLISEC = DAY_IN_MILLISEC * 7;
-
     const MONTH_IN_MILLISEC = DAY_IN_MILLISEC * 30;
     const YEARS_IN_MILLISEC = 365 * DAY_IN_MILLISEC;
 
+    const dateNow = Date.now();
+
     return {
-      timeHourAgo: new Date(new Date() - HOUR_IN_MILLISEC),
-      timeDayAgo: new Date(new Date() - DAY_IN_MILLISEC),
-      timeWeekAgo: new Date(new Date() - WEEK_IN_MILLISEC),
-      timeMonthAgo: new Date(new Date() - MONTH_IN_MILLISEC),
-      timeYearAgo: new Date(new Date() - YEARS_IN_MILLISEC),
+      timeHourAgo: new Date(dateNow - HOUR_IN_MILLISEC),
+      timeDayAgo: new Date(dateNow - DAY_IN_MILLISEC),
+      timeWeekAgo: new Date(dateNow - WEEK_IN_MILLISEC),
+      timeMonthAgo: new Date(dateNow - MONTH_IN_MILLISEC),
+      timeYearAgo: new Date(dateNow - YEARS_IN_MILLISEC),
     };
   },
 };
