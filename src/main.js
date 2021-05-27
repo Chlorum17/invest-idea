@@ -10,11 +10,11 @@ const logger = require('../logger');
 
 async function bootstrap() {
   try {
-    startServer(serverPort);
-    logger.info(`Server started at port ${serverPort}`);
-
     await connectToMongoDB(mongoURI);
     logger.info(`Connected to MongoDB`);
+
+    startServer(serverPort);
+    logger.info(`Server started at port ${serverPort}`);
   } catch (error) {
     logger.error(error);
     process.exit(1);
