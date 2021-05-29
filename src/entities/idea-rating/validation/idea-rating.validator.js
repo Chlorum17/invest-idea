@@ -5,7 +5,8 @@ const validateSchema = require('./idea-rating.validation-schema');
 const ideaRatingGuard = {
   async validate(req, res, next) {
     try {
-      const { ideaId, rating } = req.body;
+      const { ideaId } = req.params;
+      const { rating } = req.body;
       await validateSchema.validateAsync({ ideaId, rating });
       return next();
     } catch (error) {
