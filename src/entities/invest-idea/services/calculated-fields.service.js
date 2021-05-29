@@ -8,12 +8,12 @@ const calculatedFieldsService = {
     currentPrice,
   }) {
     const predictedIncome =
-      investType === 'Продажа'
+      investType === 'sell'
         ? this._calcPredictedIncomeSell(openingPrice, closingPrice)
         : this._calcPredictedIncomeBuy(openingPrice, closingPrice);
 
     const currentIncome =
-      investType === 'Продажа'
+      investType === 'sell'
         ? this._calcCurrentIncomeSell(openingPrice, currentPrice)
         : this._calcCurrentIncomeBuy(openingPrice, currentPrice);
 
