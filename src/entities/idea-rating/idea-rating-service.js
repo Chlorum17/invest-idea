@@ -7,10 +7,10 @@ const authService = require('../../common/auth/auth.service');
 const service = {
   async getRating(ideaId) {
     const likes = await IdeaRatingModel.countDocuments({
-      $and: [{ idea: ideaId }, { rating: 'Верю' }],
+      $and: [{ idea: ideaId }, { rating: 'like' }],
     });
     const dislikes = await IdeaRatingModel.countDocuments({
-      $and: [{ idea: ideaId }, { rating: 'Не верю' }],
+      $and: [{ idea: ideaId }, { rating: 'dislike' }],
     });
     return { likes, dislikes };
   },
