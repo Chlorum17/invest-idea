@@ -2,7 +2,7 @@
 
 const authService = require('./auth.service');
 
-const middleware = {
+const authGuard = {
   async authenticate(req, res, next) {
     try {
       const token = authService.parseBearerToken(req.headers);
@@ -14,4 +14,4 @@ const middleware = {
   },
 };
 
-module.exports = middleware;
+module.exports = authGuard;

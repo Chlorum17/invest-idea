@@ -6,7 +6,7 @@ const investIdeaController = require('../entities/invest-idea/invest-idea.contro
 
 const isIdeaValidator = require('../common/is-idea.validator');
 
-const createIdeaValidator = require('../entities/invest-idea/validation/invest-idea.guard');
+const createIdeaValidator = require('../entities/invest-idea/validation/create-idea.validator');
 
 router.get('/', investIdeaController.find);
 router.get('/:ideaId', investIdeaController.findById);

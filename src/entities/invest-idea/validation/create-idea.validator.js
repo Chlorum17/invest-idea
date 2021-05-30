@@ -2,7 +2,7 @@
 
 const validateSchema = require('./invest-idea.validation-schema');
 
-const createIdeaGuard = {
+const createIdeaValidator = {
   async validate(req, res, next) {
     try {
       await validateSchema.validateAsync(req.body);
@@ -13,4 +13,4 @@ const createIdeaGuard = {
   },
 };
 
-module.exports = createIdeaGuard;
+module.exports = createIdeaValidator;

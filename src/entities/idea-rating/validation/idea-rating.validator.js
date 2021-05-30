@@ -2,7 +2,7 @@
 
 const validateSchema = require('./idea-rating.validation-schema');
 
-const ideaRatingGuard = {
+const ideaRatingValidator = {
   async validate(req, res, next) {
     try {
       const { ideaId } = req.params;
@@ -15,4 +15,4 @@ const ideaRatingGuard = {
   },
 };
 
-module.exports = ideaRatingGuard;
+module.exports = ideaRatingValidator;
