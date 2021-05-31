@@ -35,6 +35,6 @@ const ideaSchema = new Schema(
   { timestamps: true },
 );
 
-const InvestIdeaModel = model('InvestIdea', ideaSchema);
+const InvestIdeaModel = model('invest-idea', ideaSchema);
 
 module.exports = InvestIdeaModel;
