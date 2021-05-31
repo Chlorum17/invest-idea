@@ -1,21 +1,23 @@
 'use strict';
 
-const InvestIdeaModel = require('../invest-idea.model');
+const investIdeaModelAdapter = require('../db/invest-idea.model-adapter');
 
 const calcFieldsService = require('./calculated-fields.service');
 const incomeChart = require('./income-chart.service');
 
 const service = {
   async find({ filter, skip, limit, sort }) {
-    const investIdeas = await InvestIdeaModel.find(filter)
-      .skip(skip)
-      .limit(limit)
-      .sort(sort);
+    const investIdeas = await investIdeaModelAdapter.find(
+      filter,
+      skip,
+      limit,
+      sort,
+    );
     return investIdeas;
   },
 
   async findById(ideaId) {
-    const investIdea = await InvestIdeaModel.findById(ideaId);
+    const investIdea = await investIdeaModelAdapter.findById(ideaId);
     return investIdea;
   },
 
@@ -35,7 +37,7 @@ const service = {
       ...calculatedFields,
     };
 
-    const existingInvestIdea = await InvestIdeaModel.create(investIdea);
+    const existingInvestIdea = await investIdeaModelAdapter.create(investIdea);
 
     return existingInvestIdea;
   },
@@ -43,7 +45,9 @@ const service = {
   async getIdeaIncomeChart(ideaId, period) {
     const { startOfPeriod, endOfPeriod } = incomeChart.getPeriodLimits(period);
 
-    const { currentIncomeHistory } = await InvestIdeaModel.findById(ideaId);
+    const { currentIncomeHistory } = await investIdeaModelAdapter.findById(
+      ideaId,
+    );
     const currentIncomeChart = currentIncomeHistory.filter(
       (el) => el.date >= startOfPeriod && el.date <= endOfPeriod,
     );
@@ -56,13 +60,9 @@ const service = {
   },
 
   async findByIdAndUpdateIncomeHistory(ideaId, { value, date }) {
-    const updatedIdea = await InvestIdeaModel.findOneAndUpdate(
-      ideaId,
-      { $addToSet: { currentIncomeHistory: { value, date } } },
-      {
-        new: true,
-      },
-    );
+    const updatedIdea = await investIdeaModelAdapter.findByIdAndUpdate(ideaId, {
+      $addToSet: { currentIncomeHistory: { value, date } },
+    });
     return updatedIdea;
   },
 };

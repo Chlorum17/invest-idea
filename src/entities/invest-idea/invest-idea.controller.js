@@ -6,7 +6,7 @@ const formatter = require('./services/invest-idea.formatter');
 
 const investIdeaService = require('./services/invest-idea.service');
 
-const controller = {
+const investIdeaController = {
   async find(req, res) {
     try {
       const params = aqp(req.query);
@@ -91,4 +91,4 @@ const controller = {
   },
 };
 
-module.exports = controller;
+module.exports = investIdeaController;

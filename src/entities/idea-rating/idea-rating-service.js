@@ -1,22 +1,22 @@
 'use strict';
 
-const IdeaRatingModel = require('./idea-rating.model');
+const ideaRatingModelAdapter = require('./db/idea-rating.model-adapter');
 
 const authService = require('../../common/auth/auth.service');
 
 const service = {
   async getRating(ideaId) {
-    const likes = await IdeaRatingModel.countDocuments({
+    const likes = await ideaRatingModelAdapter.countDocuments({
       $and: [{ idea: ideaId }, { rating: 'like' }],
     });
-    const dislikes = await IdeaRatingModel.countDocuments({
+    const dislikes = await ideaRatingModelAdapter.countDocuments({
       $and: [{ idea: ideaId }, { rating: 'dislike' }],
     });
     return { likes, dislikes };
   },
 
   async findOne(filter) {
-    const ideaRating = await IdeaRatingModel.findOne(filter);
+    const ideaRating = await ideaRatingModelAdapter.findOne(filter);
     return ideaRating;
   },
 
@@ -33,7 +33,7 @@ const service = {
       return currentRating;
     }
 
-    await IdeaRatingModel.create({
+    await ideaRatingModelAdapter.create({
       user: _id,
       idea: ideaId,
       rating,
